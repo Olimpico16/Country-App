@@ -1,0 +1,218 @@
+<ng-template #loading class="container">
+  <div class="div-flex">
+    <div>
+      <svg
+        class="pl"
+        viewBox="0 0 128 128"
+        width="128px"
+        height="128px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="hsl(215.75, 98%, 52%)"></stop>
+            <stop offset="100%" stop-color="hsl(0,0%,0%)"></stop>
+          </linearGradient>
+        </defs>
+        <circle
+          class="pl__ring"
+          r="56"
+          cx="64"
+          cy="64"
+          fill="none"
+          stroke="hsla(0,10%,10%,0.1)"
+          stroke-width="16"
+          stroke-linecap="round"
+        ></circle>
+        <path
+          class="pl__worm"
+          d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z"
+          fill="none"
+          stroke="url(#pl-grad)"
+          stroke-width="16"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="44 1111"
+          stroke-dashoffset="10"
+        ></path>
+      </svg>
+    </div>
+    <div>
+      <p class="load-p"> Buscando... </p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #img></ng-template>
+
+<div *ngIf="country; else loading">
+  <div class="flex">
+    <div>
+      <button class="icon-left" routerLink="by-country">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-arrow-badge-left-filled"
+          width="44"
+          height="44"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#2c3e50"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M17 6h-6a1 1 0 0 0 -.78 .375l-4 5a1 1 0 0 0 0 1.25l4 5a1 1 0 0 0 .78 .375h6l.112 -.006a1 1 0 0 0 .669 -1.619l-3.501 -4.375l3.5 -4.375a1 1 0 0 0 -.78 -1.625z"
+            stroke-width="0"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+    </div>
+    <div class="col-12">
+      <h2>
+        País: <strong>{{ country.name.common }} </strong>
+      </h2>
+      <hr />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="coatOfArms mb-4">
+      <div class="col-4">
+        <h3>Bandera</h3>
+        <img
+          [src]="country.flags.svg"
+          [alt]="country.name.common"
+          class="img-thumbnail"
+        />
+      </div>
+
+      <div class="arms" *ngIf="country.coatOfArms.svg; else img">
+        <h3>Escudo</h3>
+        <img [src]="country.coatOfArms.svg" class="img-thumbnail img-arms" />
+      </div>
+    </div>
+
+    <div class="row">
+      <h3>Informacion:</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <strong>Nombre:</strong> {{ country.name.common }}
+        </li>
+        <li
+          class="list-group-item"
+          *ngIf="country.name.nativeName.spa?.official?.length"
+        >
+          <strong>Nombre Oficial:</strong>
+          {{ country.name.nativeName.spa?.official }}
+        </li>
+        <li class="list-group-item">
+          <strong>Dominio:</strong> {{ country.tld }}
+        </li>
+        <li class="list-group-item">
+          <strong>Capital:</strong> {{ country.capital }}
+        </li>
+        <li class="list-group-item">
+          <strong>Region:</strong> {{ country.region }}
+        </li>
+        <li class="list-group-item">
+          <strong>Sub Region:</strong> {{ country.subregion }}
+        </li>
+        <li class="list-group-item" *ngIf="country.borders?.length">
+          <strong>Fronteras:</strong> {{ country.borders }}
+        </li>
+        <li class="list-group-item">
+          <strong>Moneda:</strong> {{ getCurrency }}
+        </li>
+        <li class="list-group-item">
+          <strong>Poblacion:</strong> {{ country.population | number }}
+        </li>
+        <li class="list-group-item">
+          <strong>Código:</strong> {{ country.cca3 }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col">
+      <h3 class="text-center">Traducciones</h3>
+      <div class="d-flex flex-wrap">
+        <span class="badge bg-primary m-1">
+          {{ country.translations["ara"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["bre"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["ces"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["cym"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["deu"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["est"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["fin"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["fra"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["hrv"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["hun"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["ita"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["jpn"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["kor"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["nld"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["per"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["pol"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["por"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["rus"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["slk"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["spa"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["swe"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["tur"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["urd"].common }}
+        </span>
+        <span class="badge bg-primary m-1">
+          {{ country.translations["zho"].common }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
